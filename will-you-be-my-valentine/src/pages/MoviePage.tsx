@@ -129,7 +129,19 @@ function Advanced () {
 
   // set last direction and decrease current index
   const swiped = (direction: string, index: number) => {
+    if (currentIndex <= 1) {
+      setIsDone(true);
+    }
     updateCurrentIndex(index - 1)
+    if (direction === 'left') {
+      results.set(db[currentIndex].name, false)
+    } else {
+      results.set(db[currentIndex].name, true)
+    }
+    if (Array.from(results).filter(([key, value]) => value === true).length >= 3) {
+      setIsDone(true);
+    }
+
   }
 
   const outOfFrame = (name: string, idx: number) => {
@@ -239,9 +251,9 @@ function Advanced () {
       </div>
 
       <div className='buttons'>
-        <Button sx={{ ...decisionButton }} onClick={() => swipe('left')}>Swipe left!</Button>
+        <Button sx={{ ...decisionButton }} onClick={() => swipe('left')}>No</Button>
         <Button disabled={!canGoBack} sx={{ ...decisionButton }} onClick={() => goBack()}>Undo swipe!</Button>
-        <Button sx={{ ...decisionButton }} onClick={() => swipe('right')}>Swipe right!</Button>
+        <Button sx={{ ...decisionButton }} onClick={() => swipe('right')}>Yes</Button>
       </div>
         </>
     
