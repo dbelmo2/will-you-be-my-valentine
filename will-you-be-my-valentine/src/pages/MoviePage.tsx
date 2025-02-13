@@ -229,7 +229,7 @@ function Advanced () {
                 
       
       <Typography sx={{color: '#a70808', fontSize: '32px', marginBottom: '100px'}}>
-        Select your top 3 choices
+        Select your top 3 choices!!!
       </Typography>
 
               <div className='cardContainer'>
