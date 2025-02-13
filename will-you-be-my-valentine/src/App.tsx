@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import Slide from '@mui/material/Slide';
 import MoviePage from './pages/MoviePage';
 import QuestionPage from './pages/Question';
@@ -10,7 +10,6 @@ function App() {
 
   const [ showSlideOne, setShowSlideOne ] = useState(true);
   const [ showSlideTwo, setShowSlideTwo ] = useState(false);
-  const [ showSlideThree, setShowSlideThree ] = useState(false);
   const containerRef = useRef<HTMLElement>(null);
 
 
@@ -18,9 +17,6 @@ function App() {
     setShowSlideOne(false);
   }
 
-  const onSlideTwoDone = () => {
-    setShowSlideThree(true);
-  }
 
   return (
     <Box 
