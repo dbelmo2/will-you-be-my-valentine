@@ -1,0 +1,19 @@
+.main-animation {
+    height: 300px;
+    width: 300px;
+    transition: transform 0.7s ease, width 1s ease, height 1s ease; /* Adjust timing as needed */
+  
+  }
+  
+  .main-animation.transitioned {
+    height: 200px;
+    width: 200px;
+    transform: translateY(-175px);
+  }
+  
+  .buttons-container {
+    display: flex;
+    place-items: center;
+    align-self: center;
+    width: fit-content;
+  }

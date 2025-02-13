@@ -1,0 +1,44 @@
+
+  .peel-button {
+    position: relative;
+    font-size: 18px;
+    color: white;
+    margin: 0px 50px;
+    background-color: #df4646; /* Red background for "No" */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: background-color 0.5s ease;
+  }
+  
+  .peel-button.peeled {
+    background-color: #df4646; /* same background for "Yes" */
+  }
+  
+  .no-label,
+  .yes-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  
+  .no-label {
+    opacity: 1;
+  }
+  
+  .yes-label {
+    opacity: 0;
+  }
+  
+  .peel-button.peeled .no-label {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotateX(90deg);
+  }
+  
+  .peel-button.peeled .yes-label {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotateX(0deg);
+  }

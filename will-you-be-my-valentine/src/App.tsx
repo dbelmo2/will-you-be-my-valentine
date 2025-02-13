@@ -1,166 +1,98 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-import { DotLottiePlayer } from '@dotlottie/react-player'
-import { Button, Typography } from '@mui/material';
-
-const decisionButton = {
-  color: 'white',
-  marginX: '50px',
-  backgroundColor: '#f9476c',
-  '&:hover': {
-    backgroundColor: '#ff8195'
-  }
-};
-
-const feedBackMessages = [
-  '',
-  'pleaseeeeeee',
-  ':((((((((',
-  'you\'re being silly',
-  'please reconsider',
-  'is that really your answer :(',
-  'don\'t make me do this...',
-  'oh no, where did the other button go :)))'
-]
+import { useEffect, useRef, useState } from 'react'
+import Slide from '@mui/material/Slide';
+import MoviePage from './pages/MoviePage';
+import QuestionPage from './pages/Question';
+import { Box } from '@mui/material';
 
 
 function App() {
 
-  const [ yesButtonSize, setYesButtonSize ] = useState(1);
-  const [ disableNoButton, setDisableNoButton ] = useState(false);
-  const [ feedbackMessage, setFeedbackMessage ] = useState('');
-  const [ noCount, setNoCount ] = useState(0);
-  const [ disableYesButton, setDisableYesButton ] = useState(false);
 
-  const increaseYesButtonSize = () => setYesButtonSize(prevSize => prevSize + 0.2);
-
-  const transitionAnimation = () => {
-    const element = document.querySelector('.main-animation');
-      if (element) {
-        setTimeout(() => {
-          element.classList.add('transitioned');
-      }, 1500);
-    }
-  };
-  
-
-  const noButtonOnClickHandler = () => {
-    increaseYesButtonSize();
-    setNoCount(prevCount => prevCount + 1);
-  };
-
-  const yesButtonOnClickHandler = () => {
-    setDisableYesButton(true);
-    setDisableNoButton(true);
-  };
-
-  useEffect(() => {
-    transitionAnimation();
-  });
-
-  useEffect(() => {
-    if (noCount >= 7) {
-      setDisableNoButton(true);
-    }
-    setFeedbackMessage(feedBackMessages[noCount]);
-  }, [noCount]);
+  const [ showSlideOne, setShowSlideOne ] = useState(true);
+  const [ showSlideTwo, setShowSlideTwo ] = useState(false);
+  const [ showSlideThree, setShowSlideThree ] = useState(false);
+  const containerRef = useRef<HTMLElement>(null);
 
 
+  const onSlideOneDone = () => {
+    setShowSlideOne(false);
+  }
+
+  const onSlideTwoDone = () => {
+    setShowSlideThree(true);
+  }
 
   return (
-    <>
-      <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+    <Box 
+      className='page'
+    >
+      <Box
+        sx={{
+          height: '100%',
+          width: '750px',
+          overflow: 'hidden',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        ref={containerRef as React.RefObject<HTMLDivElement>}
+      >
+          <Slide
+            direction='right'
+            in={showSlideOne}
+            appear={false}
+            timeout={1000}
+            onExited={() => setShowSlideTwo(true)}
+          >
+            <Box
+              sx={{
+                position: 'absolute',
+                height: '100%',
+                width: '100vw',
+              }}
 
-      <div className='page' >
+            >
+              
+              <QuestionPage
+                isShowing={!showSlideTwo}
+                onDone={onSlideOneDone}
+              />
+            </Box>
+          </Slide>
+            
 
-        <DotLottiePlayer
-          className='main-animation' 
-          src="https://lottie.host/32c035b9-d001-4b5d-89ab-141600fbd398/dMk4sGiiK2.json" 
-          background="transparent"
-          loop autoplay
-          key='1'
-        />
-        <Typography 
-          sx={{
-              position: 'fixed',
-              top: '40%',
-              left: '50%',
-              transform: 'translate(-50%, -40%)',
-              fontFamily: 'caveat',
-              fontSize: '3rem',
-              width: '100%',
-              fontWeight: '700',
-              color: '#ff8195',
-              textAlign: 'center',
-              marginBottom: '100px'
+            { !showSlideTwo ? 
+              <></> :
 
-          }}
-          className='visible-element'
-        >
-          Will you be my valentine?
-        </Typography>
-        <div className='buttons-container'>
-          <Button 
-            onClick={yesButtonOnClickHandler}
-            disabled={disableYesButton}
-            className='yes-button visible-element' 
-            sx={{
-              ...decisionButton, 
-              transform: `scale(${yesButtonSize})`,
-              transition: 'transform 0.2s ease',
-              '&:disabled': {
-                color: 'white'
-              }
-            }}>
-            { disableYesButton ? 'u the best :)<3' : 'Yes' }
-          </Button>
+                <Box
+                  sx={{
 
-          { disableNoButton ? 
-          <>
-          </> :
-            <Button
-            disabled={disableNoButton}
-            className='visible-element'
-            sx={{
-                ...decisionButton
-            }} 
-            onClick={noButtonOnClickHandler}>
-            No
-          </Button>
-        }
 
-        </div>
+                  }}
+                >
+                    <MoviePage />
 
-        <Typography 
-          sx={{
-            marginTop: '50px',
-            height: '45px',
-            display: 'flex',
-            justifyContent: 'end',
-            flexDirection: 'column',
-            color: '#ff8195',
-            fontWeight: 'bold'
+                  </Box>
+            
+              
+            }
+            
 
-          }}
-        >
-          { disableYesButton ? '' : feedbackMessage}
-        </Typography>
 
-          { disableYesButton ? (
-            <>
-              <div className="firework" style={{ left: '20%' }}></div>
-              <div className="firework" style={{ left: '40%' }}></div>
-              <div className="firework" style={{ left: '60%' }}></div>
-              <div className="firework" style={{ left: '80%' }}></div>
-              <div className="firework" style={{ left: '100%' }}></div>
-            </>
-            ) :
-            <></>
-          }
 
-      </div>
-    </>
+
+
+
+
+
+
+
+
+
+
+        </Box>
+    </Box>
   )
 }
 
-export default App
+export default App;
