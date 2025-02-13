@@ -100,12 +100,9 @@ const db = [
 const results = new Map();
 
 
-function Advanced () {
+function MoviePage () {
   const [currentIndex, setCurrentIndex] = useState(db.length - 1)
   const [isDone, setIsDone ] = useState(false);
-
-
-
 
   // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex)
@@ -263,9 +260,8 @@ function Advanced () {
       }
 
 
-
     </Box>
   )
 }
 
-export default Advanced
+export default MoviePage;
