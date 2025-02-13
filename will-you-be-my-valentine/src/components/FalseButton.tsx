@@ -12,8 +12,13 @@ const decisionButton = {
   }
 };
 
+interface MyComponentProps {
+  className?: string;
+  onClick: () => void;
+  disabled?: boolean;
+}
 
-const FalseButton = ({ className, onClick, disabled }) => {
+const FalseButton: React.FC<MyComponentProps> = ({ className, onClick, disabled }) => {
   const [isPeeled, setIsPeeled] = useState(false);
 
   const handleClick = () => {

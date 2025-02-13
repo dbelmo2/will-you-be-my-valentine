@@ -5,6 +5,16 @@ import FalseButton from '../components/FalseButton';
 import './css/Question.css';
 import '../App.css';
 
+
+interface MyComponentProps {
+    onDone: () => void;
+    isShowing: boolean;
+  }
+
+  export interface MyComponentRef {
+    triggerAction: () => void;
+  }
+
 const decisionButton = {
     color: 'white',
     height: '36px',
@@ -16,7 +26,7 @@ const decisionButton = {
   };
 
 
-const QuestionPage = forwardRef(( props, ref ) => {
+const QuestionPage = forwardRef<MyComponentProps, MyComponentProps>(( { onDone, isShowing} ) => {
     const [ feedbackMessage, setFeedbackMessage ] = useState('');
     const [ noClicked, setNoClicked ] = useState(false);
     const [ yesClicked, setYesClicked ] = useState(false);
@@ -50,7 +60,7 @@ const QuestionPage = forwardRef(( props, ref ) => {
     return (
         <Box
             sx={{
-                display: props.isShowing ? 'flex' : 'none',
+                display: isShowing ? 'flex' : 'none',
                 justifyContent: 'center',
                 zIndex: 1,
                 flexDirection: 'column',
@@ -117,7 +127,7 @@ const QuestionPage = forwardRef(( props, ref ) => {
                         ...decisionButton
                     }}
                     className='pulse'
-                    onClick={props.onDone}
+                    onClick={onDone}
                 >
                     Plan Date
                 </Button>

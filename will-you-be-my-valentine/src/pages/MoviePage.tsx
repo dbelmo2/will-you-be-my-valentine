@@ -1,3 +1,6 @@
+
+// @ts-nocheck
+
 import React, { useState, useMemo, useRef } from 'react'
 import TinderCard from 'react-tinder-card'
 import './css/MovePage.css';
@@ -99,7 +102,6 @@ const results = new Map();
 
 function Advanced () {
   const [currentIndex, setCurrentIndex] = useState(db.length - 1)
-  const [lastDirection, setLastDirection] = useState();
   const [isDone, setIsDone ] = useState(false);
 
 
@@ -112,11 +114,11 @@ function Advanced () {
     () =>
       Array(db.length)
         .fill(0)
-        .map((i) => React.createRef()),
+        .map(() => React.createRef()),
     []
   )
 
-  const updateCurrentIndex = (val) => {
+  const updateCurrentIndex = (val: number) => {
     setCurrentIndex(val)
     currentIndexRef.current = val
   }
@@ -126,12 +128,11 @@ function Advanced () {
   const canSwipe = currentIndex >= 0
 
   // set last direction and decrease current index
-  const swiped = (direction, nameToDelete, index) => {
-    setLastDirection(direction)
+  const swiped = (direction: string, index: number) => {
     updateCurrentIndex(index - 1)
   }
 
-  const outOfFrame = (name, idx) => {
+  const outOfFrame = (name: string, idx: number) => {
     console.log(`${name} (${idx}) left the screen!`, currentIndexRef.current)
     // handle the case in which go back is pressed before card goes outOfFrame
     currentIndexRef.current >= idx && childRefs[idx].current.restoreCard()
@@ -140,7 +141,7 @@ function Advanced () {
     // during latest swipes. Only the last outOfFrame event should be considered valid
   }
 
-  const swipe = async (dir) => {
+  const swipe = async (dir: string) => {
     console.log('currentIndex', currentIndex);
     if (currentIndex <= 1) {
       setIsDone(true);
@@ -225,7 +226,7 @@ function Advanced () {
             ref={childRefs[index]}
             className='swipe'
             key={character.name}
-            onSwipe={(dir) => swiped(dir, character.name, index)}
+            onSwipe={(dir) => swiped(dir, index)}
             onCardLeftScreen={() => outOfFrame(character.name, index)}
           >
             <div
